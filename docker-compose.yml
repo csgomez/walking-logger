@@ -1,0 +1,12 @@
+version: '3'
+services:
+  walking-app:
+    build:
+      context: .
+    ports:
+      - 3001:3001
+    volumes:
+      - walking-data:/app/server/data
+
+volumes:
+  walking-data:

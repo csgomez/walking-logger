@@ -1,0 +1,46 @@
+html,
+body,
+#root {
+  height: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+.content-container {
+  border-top: 1px solid black;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(240, 240, 240);
+  flex-grow: 1;
+}
+
+.walking-form {
+  width: 400px;
+  padding: 2rem;
+  padding-top: 1rem;
+  text-align: start;
+  margin-top: 2rem;
+  margin-bottom: auto;
+
+  h4 {
+    margin-bottom: 1rem;
+  }
+}
+
+.history-page {
+  & > p {
+    text-align: center;
+  }
+}
+
+@media (width < 450px) {
+  main {
+    padding: 0;
+  }
+  .walking-form {
+    width: 100%;
+  }
+}
