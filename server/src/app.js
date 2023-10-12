@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const sequelize = require('./db');
 const walkingStatRouter = require('./routes/walkingStatRouter');
+const dataRouter = require('./routes/dataRouter');
 const WalkingStat = require('./models/walkingStat');
 const {
   NODE_ENV,
@@ -15,11 +16,16 @@ const {
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    exposedHeaders: ['X-Filename'],
+  })
+);
 app.use(morgan('dev'));
 app.use(express.json());
 
 app.use('/stats', walkingStatRouter);
+app.use('/data', dataRouter);
 
 // Use built react frontend for production
 if (NODE_ENV === 'production') {
