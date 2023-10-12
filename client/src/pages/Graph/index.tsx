@@ -8,7 +8,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { useGetWalkingStats } from '../services/api';
+import { useGetWalkingStats } from '../../services/api';
 
 ChartJS.register(
   CategoryScale,

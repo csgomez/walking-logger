@@ -1,5 +1,5 @@
 import { useForm } from 'react-hook-form';
-import { createWalkingStat } from '../services/api';
+import { createWalkingStat } from '../../services/api';
 import toast from 'react-hot-toast';
 
 export type WalkingFormData = {

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useGetWalkingStats } from '../services/api';
+import { useGetWalkingStats } from '../../services/api';
 
 type WalkingStat = {
   id: number;
