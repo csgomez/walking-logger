@@ -1,27 +1,16 @@
-import axios from 'axios';
+import { fetchWalkingStatsFile } from '../../services/api';
+import { downloadFile } from './utils';
 
 const Options = () => {
-  // TODO: Clean this mess of a function up
   const handleDataExport = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/data', {
-        responseType: 'blob',
-      });
+      const response = await fetchWalkingStatsFile();
 
-      const href = URL.createObjectURL(response.data);
-      const link = document.createElement('a');
-      link.href = href;
+      const fileData = response.data;
       const filename =
         response.headers['x-filename'] || 'WalkingLogger-data.json';
-      link.setAttribute('download', filename);
-      document.body.appendChild(link);
-      link.click();
 
-      console.log(response.data);
-
-      // cleanup
-      document.body.removeChild(link);
-      URL.revokeObjectURL(href);
+      downloadFile(fileData, filename);
     } catch (err) {
       console.error('Error getting walking stats file from server:', err);
     }
@@ -29,39 +18,32 @@ const Options = () => {
 
   return (
     <div className="options-page">
-      {/* <Option optionName="Export Data" buttonName="Export" />
-      <Option optionName="Import Data" buttonName="Import" />
-      <Option optionName="Clear Data" buttonName="Clear" /> */}
-      <div>
-        <p>Export Data</p>
-        <button className="btn btn-outline-primary" onClick={handleDataExport}>
-          Export
-        </button>
-      </div>
-      <div>
-        <p>Import Data</p>
-        <button className="btn btn-outline-primary">Import</button>
-      </div>
-      <div>
-        <p>Delete Data</p>
-        <button className="btn btn-outline-primary">Delete</button>
-      </div>
+      <OptionItem
+        optionTitle="Export Data"
+        buttonText="Export"
+        onClick={handleDataExport}
+      />
+      <OptionItem optionTitle="Import Data" buttonText="Import" />
+      <OptionItem optionTitle="Clear Data" buttonText="Clear" />
     </div>
   );
 };
 
-// interface OptionProps {
-//   optionName: string;
-//   buttonName: string;
-// }
+interface OptionProps {
+  optionTitle: string;
+  buttonText: string;
+  onClick?: () => void;
+}
 
-// const Option = ({ optionName, buttonName }: OptionProps) => {
-//   return (
-//     <div className="d-flex flex-row align-items-center">
-//       <p>{optionName}</p>{' '}
-//       <button className="btn btn-sm btn-outline-primary">{buttonName}</button>
-//     </div>
-//   );
-// };
+const OptionItem = ({ optionTitle, buttonText, onClick }: OptionProps) => {
+  return (
+    <div className="py-2 d-flex flex-row align-items-center justify-content-between">
+      <p>{optionTitle}</p>
+      <button className="btn btn-sm btn-primary" onClick={onClick}>
+        {buttonText}
+      </button>
+    </div>
+  );
+};
 
 export default Options;

@@ -36,6 +36,14 @@ body,
   }
 }
 
+.options-page {
+  width: 80%;
+
+  p {
+    margin-bottom: 0 !important;
+  }
+}
+
 @media (width < 450px) {
   main {
     padding: 0;
