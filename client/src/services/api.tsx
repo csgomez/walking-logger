@@ -24,8 +24,16 @@ const fetchWalkingStats = async () => {
   return walkingStats;
 };
 
+// TODO: Fix this!!!
 export const createWalkingStat = async (walkingStat: WalkingFormData) => {
-  return axios.post('http://localhost:3001/stats', walkingStat);
+  const [mm, ss] = walkingStat.duration.split(':');
+  const totalSeconds = Number(mm) * 60 + Number(ss);
+  return axios.post('http://localhost:3001/stats', {
+    ...walkingStat,
+    duration: totalSeconds,
+    distance: Number(walkingStat.distance),
+    calories: Number(walkingStat.calories),
+  });
 };
 
 export const useGetWalkingStats = () => {
