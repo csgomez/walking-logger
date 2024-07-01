@@ -3,7 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import statsRouter from './src/routes/statsRouter';
 
-const port = 3001;
+const PORT = 3001;
 
 const app = express();
 
@@ -13,6 +13,6 @@ app.use(express.json());
 
 app.use('/stats', statsRouter);
 
-app.listen(port, () => {
-  console.log(`Walking server is now running on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Walking server is now running on port ${PORT}`);
 });
