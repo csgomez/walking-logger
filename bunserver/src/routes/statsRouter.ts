@@ -18,7 +18,7 @@ statsRouter.get('/', async (req, res) => {
     return res.json(results);
   } catch (error) {
     console.error('Error getting all stats:', error);
-    return res.status(500);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR);
   }
 });
 
@@ -38,19 +38,21 @@ statsRouter.post('/', validateStats, async (req, res) => {
     )`);
   try {
     const result = insertQuery.run({
-      $duration: body.duration,
-      $distance: body.distance,
-      $calories: body.calories,
-      $note: body.note,
+      duration: body.duration,
+      distance: body.distance,
+      calories: body.calories,
+      note: body.note,
     });
 
     console.log('Successfully inserted data!!!');
     console.log(result);
 
-    return res.status(201);
+    return res.status(StatusCodes.CREATED);
   } catch (error) {
     console.error('Error inserting values into database:', error);
-    return res.status(500);
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: 'Server Error', message: 'Failed to insert new stats.' });
   }
 });
 

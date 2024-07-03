@@ -1,8 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { createWalkingStat } from '../../services/api';
 import toast from 'react-hot-toast';
+import { createWalkingDataPayload } from '../../utils';
 
-export type WalkingFormData = {
+export type WalkingDataForm = {
   duration: string;
   distance?: string;
   calories?: string;
@@ -15,7 +16,7 @@ const WalkingForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<WalkingFormData>();
+  } = useForm<WalkingDataForm>();
 
   // const isNum = (numString: string) => !isNaN(Number(numString));
   // const isInt = (numString: string) => Number.isInteger(Number(numString));
@@ -50,14 +51,11 @@ const WalkingForm = () => {
     return isFloat(calories) || isInt(calories);
   };
 
-  const onSubmit = async (formData: WalkingFormData) => {
+  const onSubmit = async (formData: WalkingDataForm) => {
     try {
-      const newWalkingStat = {
-        ...formData,
-        date: new Date().toISOString(),
-      };
+      const walkingDataPayload = createWalkingDataPayload(formData);
 
-      await createWalkingStat(newWalkingStat);
+      await createWalkingStat(walkingDataPayload);
       toast.success('Stat successfully sent!');
       reset();
     } catch (err) {

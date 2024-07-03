@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import { WalkingFormData } from '../pages/WalkingForm';
+import { WalkingDataPayload } from '../types';
 
-type GetWalkingStatResponse = {
+type GetWalkingDataResponse = {
   id: number;
   duration: number;
   distance: number | null;
@@ -11,10 +11,11 @@ type GetWalkingStatResponse = {
   date: string; // string ISO 8601
 };
 
+const backendURL = 'http://localhost:3001';
+const statsURL = `${backendURL}/stats`;
+
 const fetchWalkingStats = async () => {
-  const response = await axios.get<GetWalkingStatResponse[]>(
-    'http://localhost:3001/stats'
-  );
+  const response = await axios.get<GetWalkingDataResponse[]>(statsURL);
   // normalize the date strings into Date objects
   const walkingStats = response.data.map((stat) => ({
     ...stat,
@@ -24,16 +25,8 @@ const fetchWalkingStats = async () => {
   return walkingStats;
 };
 
-// TODO: Fix this!!!
-export const createWalkingStat = async (walkingStat: WalkingFormData) => {
-  const [mm, ss] = walkingStat.duration.split(':');
-  const totalSeconds = Number(mm) * 60 + Number(ss);
-  return axios.post('http://localhost:3001/stats', {
-    ...walkingStat,
-    duration: totalSeconds,
-    distance: Number(walkingStat.distance),
-    calories: Number(walkingStat.calories),
-  });
+export const createWalkingStat = async (payload: WalkingDataPayload) => {
+  return axios.post(statsURL, payload);
 };
 
 export const useGetWalkingStats = () => {

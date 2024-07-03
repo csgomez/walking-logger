@@ -2,7 +2,7 @@ import { Database } from 'bun:sqlite';
 import { nodeEnv } from './config';
 
 const dbFilename = `db.${nodeEnv}.sqlite`;
-const db = new Database(dbFilename, { create: true });
+const db = new Database(dbFilename, { create: true, strict: true });
 
 // setup the tables
 db.run(`CREATE TABLE IF NOT EXISTS walking_stats (

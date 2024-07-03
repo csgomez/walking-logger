@@ -3,6 +3,9 @@ import { statsSchema } from '../schemas/statsSchema';
 import { ZodError } from 'zod';
 import { StatusCodes } from 'http-status-codes';
 
+/**
+ * Use the statsSchema and zod to validate the incoming walking data
+ */
 export const validateStats = async (
   req: Request,
   res: Response,
