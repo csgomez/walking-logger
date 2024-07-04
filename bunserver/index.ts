@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import statsRouter from './src/routes/statsRouter';
+import downloadRouter from './src/routes/downloadRouter';
 
 const PORT = 3001;
 
@@ -12,6 +13,7 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 app.use('/stats', statsRouter);
+app.use('/download-stats', downloadRouter);
 
 app.listen(PORT, () => {
   console.log(`Walking server is now running on port ${PORT}`);

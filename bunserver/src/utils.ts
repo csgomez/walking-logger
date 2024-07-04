@@ -1,3 +1,6 @@
+import fs from 'node:fs';
+import path from 'node:path';
+
 /**
  * Returns a filename in the form `WalkingData_YYYY-MM-DD.json`
  */

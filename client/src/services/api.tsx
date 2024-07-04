@@ -38,7 +38,7 @@ export const useGetWalkingStats = () => {
 };
 
 export const fetchWalkingStatsFile = async () => {
-  return axios.get('http://localhost:3001/data', {
+  return axios.get('http://localhost:3001/download-stats', {
     responseType: 'blob',
   });
 };
